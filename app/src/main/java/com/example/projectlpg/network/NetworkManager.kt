@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@RequiresApi(Build.VERSION_CODES.S)
 @Singleton
 class NetworkManager @Inject constructor(
     context: Context,
@@ -38,6 +39,7 @@ class NetworkManager @Inject constructor(
         registerNetworkCallback()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun registerNetworkCallback() {
         val networkRequest = NetworkRequest.Builder()
             .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)

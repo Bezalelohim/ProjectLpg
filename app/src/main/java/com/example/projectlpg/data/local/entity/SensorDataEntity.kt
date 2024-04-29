@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class SensorDataEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val deviceId: String,
-    val weight: String?,
+    val weight: String? = "30.0",
     val timestamp: Long? = System.currentTimeMillis()
 )

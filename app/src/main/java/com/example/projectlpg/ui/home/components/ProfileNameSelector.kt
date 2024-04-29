@@ -7,6 +7,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -26,37 +28,93 @@ fun ProfileNameDropDown(viewModel:HomeScreenViewModel = hiltViewModel()) {
     var selectedProfileName by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
-    Column {
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = it }
-        ) {
-            TextField(
-                readOnly = true,
-                value = selectedProfileName,
-                onValueChange = { /* No op */ },
-                label = { Text("Select Profile Name") },
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                },
-                modifier = Modifier.fillMaxWidth().clickable { expanded = !expanded }
-            )
-            ExposedDropdownMenu(
+    Surface( // Wrap with Surface to apply rounded corners
+        shape = MaterialTheme.shapes.medium // Use a predefined shape with rounded corners
+    ) {
+        Column {
+            ExposedDropdownMenuBox(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onExpandedChange = { expanded = it }
             ) {
-                profileNames.forEach { profileName ->
-                    DropdownMenuItem(
-                       text = { Text(profileName)
-                        },
-                        onClick = {
-                            selectedProfileName = profileName
-                            expanded = false
-                            // Use ViewModel to get deviceId by profileName
-                            val deviceId = viewModel.getDeviceIdByProfileName(profileName)
-                            // TODO: Do something with deviceId
-                        }
-                    )
+                TextField(
+                    readOnly = true,
+                    value = selectedProfileName,
+                    onValueChange = { /* No op */ },
+                    label = { Text("Select Profile Name") },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
+                    //modifier = Modifier.fillMaxWidth().clickable { expanded = !expanded }
+                    modifier = Modifier.menuAnchor()
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+
+                    profileNames.forEach { profileName ->
+                        DropdownMenuItem(
+                            text = {
+                                Text(profileName)
+                            },
+                            onClick = {
+                                selectedProfileName = profileName
+                                expanded = false
+                                // Use ViewModel to get deviceId by profileName
+                                val deviceId = viewModel.getDeviceIdByProfileName(profileName)
+                                viewModel.setSelectedDeviceId(deviceId)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PreviewProfileNameDropDown(
+    profileNames: List<String>, // Pass profile names as a parameter
+    onProfileSelected: (String) -> Unit // Pass a lambda to handle selection
+) {
+    var selectedProfileName by remember { mutableStateOf(profileNames.firstOrNull() ?: "") }
+    var expanded by remember { mutableStateOf(false) }
+
+    Surface( // Wrap with Surface to apply rounded corners
+        shape = MaterialTheme.shapes.medium // Use a predefined shape with rounded corners
+    ) {
+        Column {
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = it }
+            ) {
+                TextField(
+                    readOnly = true,
+                    value = selectedProfileName,
+                    onValueChange = { /* No op */ },
+                    label = { Text("Select Profile Name") },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { expanded = !expanded }
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    profileNames.forEach { profileName ->
+                        DropdownMenuItem(
+                            text = { Text(profileName) },
+                            onClick = {
+                                selectedProfileName = profileName
+                                onProfileSelected(profileName)
+                                expanded = false
+                            }
+                        )
+                    }
                 }
             }
         }

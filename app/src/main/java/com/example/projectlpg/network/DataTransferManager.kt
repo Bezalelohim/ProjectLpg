@@ -1,11 +1,12 @@
 package com.example.projectlpg.network
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.projectlpg.data.models.SensorData
 import com.example.projectlpg.data.repository.AppRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
-import java.io.Console
 import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
@@ -17,6 +18,7 @@ class DataTransferManager @Inject constructor(
 
 ) {
 
+    @RequiresApi(Build.VERSION_CODES.S)
     suspend fun sendAndReceiveData(ipAddress: String, port: Int, sendData: String = "WIFI_CONNECTED"): SensorData? = withContext(Dispatchers.IO) {
 
 

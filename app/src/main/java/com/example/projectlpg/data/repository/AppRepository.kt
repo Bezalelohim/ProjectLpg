@@ -1,12 +1,16 @@
 package com.example.projectlpg.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.example.projectlpg.data.local.dao.AppDao
 import com.example.projectlpg.data.local.entity.DeviceInfoEntity
 import com.example.projectlpg.data.local.entity.SensorDataEntity
 import com.example.projectlpg.data.models.DeviceInfo
 import com.example.projectlpg.data.models.SensorData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,9 +48,11 @@ class AppRepository @Inject constructor(private val appDao: AppDao) {
     }
 
     // Get the latest sensor data for a device
-    fun getLatestSensorData(deviceId: String): LiveData<SensorDataEntity> {
+     fun getLatestSensorData(deviceId: String?): Flow<SensorDataEntity> {
         return appDao.getLatestSensorData(deviceId)
     }
+
+    // Convert the LiveData logic to StateFlow
 
     // Insert new sensor data
     suspend fun insertSensorData(sensorData: SensorData) {

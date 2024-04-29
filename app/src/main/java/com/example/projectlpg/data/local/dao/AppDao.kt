@@ -24,7 +24,7 @@ interface AppDao {
     suspend fun insertSensorData(sensorDataEntity: SensorDataEntity)
 
     @Query("SELECT * FROM sensor_data WHERE deviceId = :deviceId ORDER BY timestamp DESC LIMIT 1")
-    fun getLatestSensorData(deviceId: String): LiveData<SensorDataEntity>
+    fun getLatestSensorData(deviceId: String?): Flow<SensorDataEntity>
 
 
     @Query("SELECT EXISTS(SELECT * FROM device_info WHERE ssid = :ssid)")

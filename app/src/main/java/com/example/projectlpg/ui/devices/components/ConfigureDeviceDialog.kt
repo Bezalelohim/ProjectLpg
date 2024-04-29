@@ -1,5 +1,7 @@
 package com.example.projectlpg.ui.devices.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
@@ -22,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.projectlpg.ui.devices.DevicesScreenViewModel
 
+@RequiresApi(Build.VERSION_CODES.S)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConfigureDeviceDialog(viewModel: DevicesScreenViewModel) {
@@ -111,6 +114,7 @@ fun ConfigureDeviceDialog(viewModel: DevicesScreenViewModel) {
 
 
 
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
 fun ErrorDialog(viewModel: DevicesScreenViewModel) {
     val showErrorDialog = viewModel.showErrorDialog.collectAsState().value
@@ -128,6 +132,7 @@ fun ErrorDialog(viewModel: DevicesScreenViewModel) {
         )
     }
 }
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
 fun ProfileNameInputDialog(viewModel: DevicesScreenViewModel) {
     // Declare profileName outside the if-statement

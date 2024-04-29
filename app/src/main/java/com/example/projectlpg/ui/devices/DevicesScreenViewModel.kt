@@ -1,6 +1,8 @@
 package com.example.projectlpg.ui.devices
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -16,12 +18,14 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
 
+@RequiresApi(Build.VERSION_CODES.S)
 @HiltViewModel
 class DevicesScreenViewModel @Inject constructor(
     private val networkManager: NetworkManager,
     private val appRepository: AppRepository
 ) : ViewModel() {
     val allDeviceInfo: LiveData<List<DeviceInfoEntity>> = appRepository.allDeviceInfo
+    @RequiresApi(Build.VERSION_CODES.S)
     val wifiConnectedStatus = networkManager.wifiConnected.asLiveData()
 
     // LiveData to trigger the configuration dialog
