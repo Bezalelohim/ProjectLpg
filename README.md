@@ -1,4 +1,3 @@
-Certainly! Here's a refined GitHub README for your ProjectLPG repository, formatted to align with GitHub's Markdown styling and best practices:
 
 # ProjectLPG
 
