@@ -24,7 +24,7 @@ ProjectLPG is an Android application that connects and manages IoT-enabled LPG c
 
 ### Prerequisites
 
-Ensure you have the latest version of Android Studio installed, along with the Android SDK.
+Ensure you have the latest version of Android Studio installed, along with the Android SDK, Tested on Android 12 and above. (As per February 2024)
 
 ### Installation
 
